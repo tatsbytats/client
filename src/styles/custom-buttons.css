@@ -1,0 +1,36 @@
+/* Custom Bootstrap Button Styles - Sunrise Coral (#FF6B6B) */
+.btn-sunrise-coral {
+    background-color: #FF6B6B;
+    border-color: #FF6B6B;
+    color: #fff;
+}
+
+.btn-sunrise-coral:hover,
+.btn-sunrise-coral:focus {
+    background-color: #e65a5a;
+    border-color: #e65a5a;
+    color: #fff;
+}
+
+.btn-sunrise-coral:active,
+.btn-sunrise-coral.active {
+    background-color: #cc4f4f;
+    border-color: #cc4f4f;
+    color: #fff;
+}
+
+.btn-sunrise-coral.disabled,
+.btn-sunrise-coral:disabled {
+    background-color: #FF6B6B;
+    border-color: #FF6B6B;
+    color: #fff;
+    opacity: 0.65;
+}
+
+/* Highlight Styles */
+.highlight-sunrise-coral {
+    background-color: #FF6B6B;
+    color: #fff;
+    padding: 0.2em 0.4em;
+    border-radius: 0.2em;
+}
