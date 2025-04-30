@@ -27,16 +27,20 @@ import {
     Twitter,
     Instagram,
 } from 'react-bootstrap-icons';
-import '../styles/custom-buttons.css';
-import '../styles/custom-navbar.css';
-import '../styles/custom-text-colors.css';
+import { Link } from 'react-router-dom';
+import '../assets/styles/custom-buttons.css';
+import '../assets/styles/custom-navbar.css';
+import '../assets/styles/custom-text-colors.css';
+import '../assets/styles/custom-theme.css'
 import logo from '../assets/logo.png';
+
+import Footer from '../components/common/Footer';
 
 const LandingPage = () => {
     const [activeTab, setActiveTab] = useState('Gallery');
     const [showSidebar, setShowSidebar] = useState(false);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-    const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+    const [sidebarCollapsed, setSidebarCollapsed] = useState(true);
 
     const toggleSidebar = () => setShowSidebar(!showSidebar);
     const closeSidebar = () => setShowSidebar(false);
@@ -111,30 +115,33 @@ const LandingPage = () => {
     return (
         <div className="d-flex flex-column min-vh-100">
             {/* Navbar */}
-            <Navbar variant="dark" expand="lg" className="px-3 shadow-sm navbar-custom sticky-top">
-                <Container fluid>
-                    {/* Mobile sidebar toggle - only show on mobile */}
-                    <Button
-                        variant="outline-light"
-                        onClick={toggleSidebar}
-                        className="me-2 d-lg-none c-buttons"
-                        aria-label="Toggle navigation"
-                    >
-                        <List size={20} />
-                    </Button>
+            <Navbar variant="dark" expand="lg" className="px-3 px-lg-4 shadow-sm navbar-custom sticky-top">
+                <Container fluid className="gap-3">
+                    {/* Sidebar toggle buttons - properly spaced */}
+                    <div className="d-flex align-items-center">
+                        {/* Mobile toggle (hidden on desktop) */}
+                        <Button
+                            variant="outline-light"
+                            onClick={toggleSidebar}
+                            className="me-3 d-lg-none c-buttons p-2"
+                            aria-label="Toggle navigation"
+                        >
+                            <List size={20} />
+                        </Button>
 
-                    {/* Desktop sidebar collapse toggle - only show on desktop */}
-                    <Button
-                        variant="outline-light"
-                        onClick={toggleSidebarCollapse}
-                        className="me-auto d-none d-lg-flex c-buttons align-items-center"
-                        aria-label="Toggle sidebar"
-                        style={{ width: '36px', height: '36px', padding: '0', justifyContent: 'center' }}
-                    >
-                        <List size={20} />
-                    </Button>
+                        {/* Desktop toggle (hidden on mobile) */}
+                        <Button
+                            variant="outline-light"
+                            onClick={toggleSidebarCollapse}
+                            className="d-none d-lg-flex c-buttons p-2 me-0"
+                            aria-label="Toggle sidebar"
+                        >
+                            <List size={20} />
+                        </Button>
+                    </div>
 
-                    <Navbar.Brand href="#home" className="fw-bold d-flex align-items-center">
+                    {/* Brand - kept tight */}
+                    <Navbar.Brand href="#" className="d-flex align-items-center me-4">
                         <Image
                             src={logo}
                             roundedCircle
@@ -143,18 +150,29 @@ const LandingPage = () => {
                             height="40"
                             alt="TAARA Logo"
                         />
-                        TAARA
+                        <span className="fw-bold">TAARA</span>
                     </Navbar.Brand>
 
-                    {/* Desktop navigation items */}
-                    <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
-                        <Nav>
-                            <Button variant="outline-light" className="me-2">Login</Button>
-                            <Button variant="danger" className="text-white d-none d-lg-flex">
-                                <Heart className="me-1" /> Donate
+                    {/* Spacer to push nav items to right */}
+                    <div className="flex-grow-1 d-none d-lg-block"></div>
+
+                    {/* Navigation items */}
+                    <Navbar.Collapse id="basic-navbar-nav" className="flex-grow-0">
+                        <Nav className="align-items-center gap-3">
+                            <Button as={Link} to="/login" variant="outline-light" className="px-3 py-2">
+                                Login
+                            </Button>
+                            <Button variant="danger" className="text-white px-3 py-2 d-none d-lg-flex align-items-center">
+                                <Heart className="me-2" size={18} />
+                                Donate
                             </Button>
                         </Nav>
                     </Navbar.Collapse>
+
+                    {/* Mobile menu toggle (hidden on desktop) */}
+                    <Navbar.Toggle aria-controls="basic-navbar-nav" className="border-0 px-2 ms-auto">
+                        <List size={24} />
+                    </Navbar.Toggle>
                 </Container>
             </Navbar>
 
@@ -187,7 +205,7 @@ const LandingPage = () => {
                             </Nav.Item>
                         ))}
                     </Nav>
-                    
+
                     {/* Donate button in mobile sidebar */}
                     <div className="p-3 mt-auto">
                         <Button variant="danger" className="w-100">
@@ -198,23 +216,22 @@ const LandingPage = () => {
             </Offcanvas>
 
             {/* Main Content */}
-            <Container fluid className="flex-grow-1 py-4 px-0">
+            <Container fluid className="flex-grow-1 py-0 px-0">
                 <Tab.Container activeKey={activeTab} onSelect={setActiveTab}>
                     <Row className="g-0">
-                        {/* Desktop Sidebar - sticky and properly positioned */}
                         <Col
                             lg={sidebarCollapsed ? 1 : 3}
-                            className="d-none d-lg-block sidebar-desktop"
+                            className="d-none d-lg-block sidebar-desktop c-background text-white"
                             style={{
                                 position: 'sticky',
                                 top: '76px',
-                                height: 'calc(100vh - 76px)',
+                                height: 'auto',
                                 overflowY: 'auto',
                                 transition: 'width 0.3s ease-in-out',
                                 zIndex: 1000
                             }}
                         >
-                            <Card className="border-0 shadow-sm h-100" style={{ borderRadius: '0' }}>
+                            <Card className="border-0 shadow-sm h-100 bg-transparent text-white" style={{ borderRadius: '0' }}>
                                 <Card.Body className="p-0 d-flex flex-column">
                                     <Nav variant="pills" className="flex-column flex-grow-1">
                                         {navItems.map((item) => (
@@ -222,15 +239,20 @@ const LandingPage = () => {
                                                 <Nav.Link
                                                     active={activeTab === item.key}
                                                     onClick={() => setActiveTab(item.key)}
-                                                    className="rounded-0 border-bottom py-3"
+                                                    className="rounded-0 border-bottom py-3 text-white"
                                                     style={{
+
+                                                        backgroundColor: activeTab === item.key ? '#D16D89' : 'transparent',
                                                         paddingLeft: sidebarCollapsed ? '0' : '1.5rem',
                                                         paddingRight: sidebarCollapsed ? '0' : '1.5rem',
                                                         textAlign: sidebarCollapsed ? 'center' : 'left'
                                                     }}
                                                 >
                                                     <span className={sidebarCollapsed ? '' : 'me-2'}>
-                                                        {React.cloneElement(item.icon, { size: sidebarCollapsed ? 20 : 16 })}
+                                                        {React.cloneElement(item.icon, {
+                                                            size: sidebarCollapsed ? 20 : 16,
+                                                            color: 'white' // explicitly set icon color
+                                                        })}
                                                     </span>
                                                     {!sidebarCollapsed && item.label}
                                                 </Nav.Link>
@@ -241,11 +263,12 @@ const LandingPage = () => {
                             </Card>
                         </Col>
 
+
                         {/* Content Area */}
                         <Col
                             xs={12}
                             lg={sidebarCollapsed ? 11 : 9}
-                            className="content-area px-3 px-lg-4"
+                            className="content-area px-3 px-lg-4 pb-4 c-background-cream"
                             style={{ transition: 'margin-left 0.3s ease-in-out' }}
                         >
                             {/* Mobile Tab Header */}
@@ -258,7 +281,7 @@ const LandingPage = () => {
                             <Tab.Content>
                                 {/* Gallery Tab */}
                                 <Tab.Pane eventKey="Gallery" transition={false}>
-                                    <h2 className="mb-4 d-none d-lg-block text-muted-charcoal">Our Happy Animals</h2>
+                                    <h2 className="mt-4 mb-4 d-none d-lg-block text-muted-charcoal">Our Happy Animals</h2>
                                     <Carousel className="mb-4 rounded overflow-hidden shadow-sm">
                                         {galleryImages.map((image) => (
                                             <Carousel.Item key={image.id}>
@@ -436,32 +459,7 @@ const LandingPage = () => {
                                     </Accordion>
                                 </Tab.Pane>
 
-                                {/* Rainbow Bridge Tab */}
-                                <Tab.Pane eventKey="RainbowBridge">
-                                    <div className="text-center py-4">
-                                        <h2 className="mb-4 text-primary d-none d-lg-block">Rainbow Bridge</h2>
-                                        <div className="mx-auto" style={{ maxWidth: '500px' }}>
-                                            <Image
-                                                src="https://source.unsplash.com/random/400x300/?angel"
-                                                rounded
-                                                className="mb-3 shadow"
-                                                fluid
-                                            />
-                                        </div>
-                                        <p className="lead">
-                                            In loving memory of the animals we've loved and lost.
-                                        </p>
-                                        <blockquote className="blockquote">
-                                            <p className="mb-0">
-                                                "Until one has loved an animal, a part of one's soul remains unawakened."
-                                            </p>
-                                            <footer className="blockquote-footer mt-2">Anatole France</footer>
-                                        </blockquote>
-                                        <Button variant="outline-primary" className="mt-3">
-                                            Share Your Memorial
-                                        </Button>
-                                    </div>
-                                </Tab.Pane>
+                                
 
                                 {/* Events Tab */}
                                 <Tab.Pane eventKey="Events">
@@ -602,70 +600,7 @@ const LandingPage = () => {
                 </Tab.Container>
             </Container>
 
-            {/* Footer */}
-            <footer className="bg-dark text-white py-5 mt-auto">
-                <Container>
-                    <Row className="g-4">
-                        <Col lg={4}>
-                            <h5>Paws & Hearts</h5>
-                            <p className="text-muted">
-                                Dedicated to animal welfare since 2010.
-                                A 501(c)(3) non-profit organization.
-                            </p>
-                            <div className="social-icons">
-                                <Button variant="outline-light" size="sm" className="me-2">
-                                <Facebook className="bi bi-facebook"></Facebook>
-                                </Button>
-                                <Button variant="outline-light" size="sm" className="me-2">
-                                <Instagram className="bi bi-instagram"></Instagram>
-                                </Button>
-                                <Button variant="outline-light" size="sm" className="me-2">
-                                    <Twitter></Twitter>
-                                </Button>
-                            </div>
-                        </Col>
-                        <Col xs={6} md={4} lg={3}>
-                            <h5>Quick Links</h5>
-                            <Nav className="flex-column">
-                                <Nav.Link href="#" className="text-white px-0">Home</Nav.Link>
-                                <Nav.Link href="#" className="text-white px-0">Donate</Nav.Link>
-                                <Nav.Link href="#" className="text-white px-0">Volunteer</Nav.Link>
-                                <Nav.Link href="#" className="text-white px-0">Success Stories</Nav.Link>
-                            </Nav>
-                        </Col>
-                        <Col xs={6} md={4} lg={3}>
-                            <h5>Resources</h5>
-                            <Nav className="flex-column">
-                                <Nav.Link href="#" className="text-white px-0">Pet Care Tips</Nav.Link>
-                                <Nav.Link href="#" className="text-white px-0">Adoption Process</Nav.Link>
-                                <Nav.Link href="#" className="text-white px-0">Spay/Neuter Info</Nav.Link>
-                                <Nav.Link href="#" className="text-white px-0">Emergency Contacts</Nav.Link>
-                            </Nav>
-                        </Col>
-                        <Col xs={6} md={4} lg={2}>
-                            <h5>Legal</h5>
-                            <Nav className="flex-column">
-                                <Nav.Link href="#" className="text-white px-0">Privacy Policy</Nav.Link>
-                                <Nav.Link href="#" className="text-white px-0">Terms of Use</Nav.Link>
-                                <Nav.Link href="#" className="text-white px-0">Financial Reports</Nav.Link>
-                            </Nav>
-                        </Col>
-                    </Row>
-                    <hr className="mt-4 mb-3" />
-                    <Row>
-                        <Col md={6} className="mb-3 mb-md-0">
-                            <p className="mb-0 text-muted">
-                                &copy; {new Date().getFullYear()} Paws & Hearts. All rights reserved.
-                            </p>
-                        </Col>
-                        <Col md={6} className="text-md-end">
-                            <p className="mb-0 text-muted">
-                                Made with <Heart className="text-danger" /> for animals
-                            </p>
-                        </Col>
-                    </Row>
-                </Container>
-            </footer>
+            <Footer />
         </div>
     );
 };

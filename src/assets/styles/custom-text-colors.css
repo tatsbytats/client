@@ -38,3 +38,8 @@
 .text-soft-mint {
     color: #D6F5E3; /* Soft Mint */
 }
+
+.sidebar-desktop {
+    background-color: #FF6B6B; /* match this to your navbar-custom background */
+    color: #4E4E4E;
+  }

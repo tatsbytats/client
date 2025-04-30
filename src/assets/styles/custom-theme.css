@@ -1,0 +1,29 @@
+/* styles/custom-theme.css */
+:root {
+    --bs-primary: #F4AAB9;
+  }
+  
+  .c-background {
+    background-color: #F4AAB9; /* a lighter shade for the whole page */
+    
+  }
+
+  .c-background-cream {
+    background-color: #FFF8F4;
+  }
+  
+  .custom-btn {
+    background-color: #F4AAB9;
+    border-color: #F4AAB9;
+    color: white;
+  }
+  
+  .custom-btn:hover {
+    background-color: #e597a7;
+    border-color: #e597a7;
+  }
+  
+  .custom-heading {
+    color: #F4AAB9;
+  }
+  
