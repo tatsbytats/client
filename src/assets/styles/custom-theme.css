@@ -27,3 +27,15 @@
     color: #F4AAB9;
   }
   
+  .hover-bg-light:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+  
+  /* For the Offcanvas to behave properly on desktop */
+  @media (min-width: 768px) {
+    .offcanvas-md {
+      visibility: visible;
+      transform: none;
+      position: static;
+    }
+  }

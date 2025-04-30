@@ -35,6 +35,8 @@ import '../assets/styles/custom-theme.css'
 import logo from '../assets/logo.png';
 
 import Footer from '../components/common/Footer';
+import RainbowBridge from '../components/common/RainbowBridge';
+import Events from '../components/common/Events';
 
 const LandingPage = () => {
     const [activeTab, setActiveTab] = useState('Gallery');
@@ -64,6 +66,11 @@ const LandingPage = () => {
         { id: 1, src: 'https://images.pexels.com/photos/326012/pexels-photo-326012.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', alt: 'Linny' },
         { id: 2, src: 'https://images.pexels.com/photos/3387169/pexels-photo-3387169.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', alt: 'Tuck' },
         { id: 3, src: 'https://images.pexels.com/photos/162140/duckling-birds-yellow-fluffy-162140.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', alt: 'Ming-ming' },
+        { id: 4, src: 'https://images.pexels.com/photos/50577/hedgehog-animal-baby-cute-50577.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', alt: 'Hedgie' },
+        { id: 5, src: 'https://images.pexels.com/photos/326012/pexels-photo-326012.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', alt: 'Linny' },
+        { id: 6, src: 'https://images.pexels.com/photos/3387169/pexels-photo-3387169.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', alt: 'Tuck' },
+        { id: 7, src: 'https://images.pexels.com/photos/162140/duckling-birds-yellow-fluffy-162140.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', alt: 'Ming-ming' },
+        { id: 8, src: 'https://images.pexels.com/photos/50577/hedgehog-animal-baby-cute-50577.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', alt: 'Hedgie' },
     ];
 
     const adoptionPets = [
@@ -72,11 +79,7 @@ const LandingPage = () => {
         { id: 3, name: 'Bella', type: 'Dog', age: '3 years', breed: 'Beagle', img: 'https://source.unsplash.com/random/200x200/?beagle' },
     ];
 
-    const events = [
-        { id: 1, title: 'Adoption Day', date: 'June 10th', time: '10am-4pm', location: 'Community Center' },
-        { id: 2, title: 'Fundraiser Gala', date: 'July 15th', time: '7pm-11pm', location: 'Grand Hotel' },
-        { id: 3, title: 'Volunteer Training', date: 'August 5th', time: '9am-12pm', location: 'Shelter' },
-    ];
+    
 
     // Navigation items data
     const navItems = [
@@ -280,48 +283,36 @@ const LandingPage = () => {
 
                             <Tab.Content>
                                 {/* Gallery Tab */}
-                                <Tab.Pane eventKey="Gallery" transition={false}>
-                                    <h2 className="mt-4 mb-4 d-none d-lg-block text-muted-charcoal">Our Happy Animals</h2>
-                                    <Carousel className="mb-4 rounded overflow-hidden shadow-sm">
-                                        {galleryImages.map((image) => (
-                                            <Carousel.Item key={image.id}>
-                                                <div className="position-relative" style={{ height: '50vh', maxHeight: '500px' }}>
-                                                    <img
-                                                        className="d-block w-100 h-100"
-                                                        src={image.src}
-                                                        alt={image.alt}
-                                                        style={{ objectFit: 'cover' }}
-                                                    />
-                                                    <Carousel.Caption className="bg-dark bg-opacity-50 rounded">
-                                                        <h5>{image.alt}</h5>
-                                                    </Carousel.Caption>
-                                                </div>
-                                            </Carousel.Item>
-                                        ))}
-                                    </Carousel>
-                                    <Row xs={1} sm={2} lg={3} className="g-4">
-                                        {galleryImages.map((image) => (
-                                            <Col key={image.id}>
-                                                <Card className="h-100 shadow-sm hover-scale">
-                                                    <div style={{ height: '200px', overflow: 'hidden' }}>
-                                                        <Card.Img
-                                                            variant="top"
-                                                            src={image.src}
-                                                            alt={image.alt}
-                                                            className="h-100 w-100"
-                                                            style={{ objectFit: 'cover' }}
-                                                        />
-                                                    </div>
-                                                    <Card.Body>
-                                                        <Card.Text className="text-center">
-                                                            {image.alt}
-                                                        </Card.Text>
-                                                    </Card.Body>
-                                                </Card>
-                                            </Col>
-                                        ))}
-                                    </Row>
-                                </Tab.Pane>
+<Tab.Pane eventKey="Gallery" transition={false}>
+  <div style={{
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
+    gap: '16px',
+    maxHeight: '70vh',
+    overflowY: 'auto',
+    padding: '8px'
+  }}>
+    {galleryImages.map((image) => (
+      <div key={image.id} style={{
+        aspectRatio: '1',
+        borderRadius: '8px',
+        overflow: 'hidden',
+        transition: 'transform 0.2s'
+      }}>
+        <img
+          src={image.src}
+          alt=""
+          style={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            cursor: 'pointer'
+          }}
+        />
+      </div>
+    ))}
+  </div>
+</Tab.Pane>
 
                                 <Tab.Pane eventKey="ForAdoption">
                                     <h2 className="mb-4 text-primary d-none d-lg-block">Pets Available for Adoption</h2>
@@ -459,46 +450,14 @@ const LandingPage = () => {
                                     </Accordion>
                                 </Tab.Pane>
 
-                                
+                                {/* Rainbow Bridge Tab */}
+                                <Tab.Pane eventKey="RainbowBridge">
+                                    <RainbowBridge />
+                                </Tab.Pane>
 
                                 {/* Events Tab */}
                                 <Tab.Pane eventKey="Events">
-                                    <h2 className="mb-4 text-primary d-none d-lg-block">Upcoming Events</h2>
-                                    <Row xs={1} sm={2} lg={3} className="g-4 mb-4">
-                                        {events.map((event) => (
-                                            <Col key={event.id}>
-                                                <Card className="h-100 shadow-sm">
-                                                    <Card.Body>
-                                                        <Card.Title>{event.title}</Card.Title>
-                                                        <Card.Subtitle className="mb-2 text-muted">
-                                                            {event.date} • {event.time}
-                                                        </Card.Subtitle>
-                                                        <Card.Text>
-                                                            <strong>Location:</strong> {event.location}
-                                                        </Card.Text>
-                                                    </Card.Body>
-                                                    <Card.Footer className="bg-white border-0">
-                                                        <Button variant="outline-primary" className="w-100">
-                                                            RSVP
-                                                        </Button>
-                                                    </Card.Footer>
-                                                </Card>
-                                            </Col>
-                                        ))}
-                                    </Row>
-                                    <Card className="border-primary">
-                                        <Card.Header className="bg-primary text-white">
-                                            Subscribe to Our Calendar
-                                        </Card.Header>
-                                        <Card.Body>
-                                            <Card.Text>
-                                                Never miss an event by subscribing to our calendar feed.
-                                            </Card.Text>
-                                            <Button variant="primary">
-                                                Get Calendar Link
-                                            </Button>
-                                        </Card.Body>
-                                    </Card>
+                                    <Events />
                                 </Tab.Pane>
 
                                 {/* Welfare Law Tab */}
@@ -581,14 +540,7 @@ const LandingPage = () => {
                                                         <strong>Email:</strong> tabacoanimalrescueadoption2022@gmail.com<br />
                                                         <strong>Hours:</strong> Mon-Fri 9am-5pm
                                                     </p>
-                                                    <div className="d-flex flex-column flex-sm-row gap-2">
-                                                        <Button variant="primary">
-                                                            Contact Form
-                                                        </Button>
-                                                        <Button variant="outline-primary">
-                                                            Volunteer Signup
-                                                        </Button>
-                                                    </div>
+                                                    
                                                 </Col>
                                             </Row>
                                         </Card.Body>
