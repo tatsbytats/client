@@ -11,7 +11,6 @@ import {
     Image,
     Card,
     ListGroup,
-    Carousel,
     Accordion
 } from 'react-bootstrap';
 import {
@@ -37,8 +36,15 @@ import logo from '../assets/logo.png';
 import Footer from '../components/common/Footer';
 import RainbowBridge from '../components/common/RainbowBridge';
 import Events from '../components/common/Events';
+import PetsForAdoption from '../components/common/PetsForAdoption';
+import DonationModal from '../components/common/DonationModal';
+import AnimalWelfareLaw from '../components/common/AnimalWelfareLaw';
+import GalleryTab from '../components/common/Gallery';
+import AboutUsTab from '../components/common/AboutUsTab';
 
 const LandingPage = () => {
+    const [showDonationModal, setShowDonationModal] = useState(false);
+
     const [activeTab, setActiveTab] = useState('Gallery');
     const [showSidebar, setShowSidebar] = useState(false);
     const [windowWidth, setWindowWidth] = useState(window.innerWidth);
@@ -73,13 +79,9 @@ const LandingPage = () => {
         { id: 8, src: 'https://images.pexels.com/photos/50577/hedgehog-animal-baby-cute-50577.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', alt: 'Hedgie' },
     ];
 
-    const adoptionPets = [
-        { id: 1, name: 'Max', type: 'Dog', age: '2 years', breed: 'Labrador', img: 'https://source.unsplash.com/random/200x200/?labrador' },
-        { id: 2, name: 'Luna', type: 'Cat', age: '1 year', breed: 'Siamese', img: 'https://source.unsplash.com/random/200x200/?siamese' },
-        { id: 3, name: 'Bella', type: 'Dog', age: '3 years', breed: 'Beagle', img: 'https://source.unsplash.com/random/200x200/?beagle' },
-    ];
 
-    
+
+
 
     // Navigation items data
     const navItems = [
@@ -100,23 +102,17 @@ const LandingPage = () => {
         }
     };
 
-    const [typeFilter, setTypeFilter] = useState('All');
-    const [colorFilter, setColorFilter] = useState('All');
+
 
     // Filter pets based on type and color selections
-    const filteredPets = adoptionPets.filter(pet => {
-        // Check if pet matches the type filter
-        const matchesType = typeFilter === 'All' || pet.type === typeFilter;
-
-        // Check if pet matches the color filter
-        const matchesColor = colorFilter === 'All' || pet.color === colorFilter;
-
-        // Return true only if both filters match
-        return matchesType && matchesColor;
-    });
 
     return (
         <div className="d-flex flex-column min-vh-100">
+            {/* Donation Modal */}
+            <DonationModal
+                show={showDonationModal}
+                handleClose={() => setShowDonationModal(false)}
+            />
             {/* Navbar */}
             <Navbar variant="dark" expand="lg" className="px-3 px-lg-4 shadow-sm navbar-custom sticky-top">
                 <Container fluid className="gap-3">
@@ -165,7 +161,7 @@ const LandingPage = () => {
                             <Button as={Link} to="/login" variant="outline-light" className="px-3 py-2">
                                 Login
                             </Button>
-                            <Button variant="danger" className="text-white px-3 py-2 d-none d-lg-flex align-items-center">
+                            <Button onClick={() => setShowDonationModal(true)} variant="danger" className="text-white px-3 py-2 d-none d-lg-flex align-items-center">
                                 <Heart className="me-2" size={18} />
                                 Donate
                             </Button>
@@ -282,138 +278,14 @@ const LandingPage = () => {
                             </div>
 
                             <Tab.Content>
-                                {/* Gallery Tab */}
-<Tab.Pane eventKey="Gallery" transition={false}>
-  <div style={{
-    display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
-    gap: '16px',
-    maxHeight: '70vh',
-    overflowY: 'auto',
-    padding: '8px'
-  }}>
-    {galleryImages.map((image) => (
-      <div key={image.id} style={{
-        aspectRatio: '1',
-        borderRadius: '8px',
-        overflow: 'hidden',
-        transition: 'transform 0.2s'
-      }}>
-        <img
-          src={image.src}
-          alt=""
-          style={{
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-            cursor: 'pointer'
-          }}
-        />
-      </div>
-    ))}
-  </div>
-</Tab.Pane>
+                                <GalleryTab images={galleryImages} />
 
-                                <Tab.Pane eventKey="ForAdoption">
-                                    <h2 className="mb-4 text-primary d-none d-lg-block">Pets Available for Adoption</h2>
-                                    <p className="lead">
-                                        Give these wonderful animals a forever home!
-                                    </p>
-
-                                    {/* Filter Controls */}
-                                    <div className="mb-4">
-                                        <h5>Filter By:</h5>
-                                        <div className="d-flex flex-wrap gap-2 mb-3">
-                                            <Button
-                                                variant="outline-primary"
-                                                onClick={() => setTypeFilter('All')}
-                                                active={typeFilter === 'All'}
-                                            >
-                                                All Pets
-                                            </Button>
-                                            <Button
-                                                variant="outline-primary"
-                                                onClick={() => setTypeFilter('Dog')}
-                                                active={typeFilter === 'Dog'}
-                                            >
-                                                Dogs
-                                            </Button>
-                                            <Button
-                                                variant="outline-primary"
-                                                onClick={() => setTypeFilter('Cat')}
-                                                active={typeFilter === 'Cat'}
-                                            >
-                                                Cats
-                                            </Button>
-                                        </div>
-                                        <div className="d-flex flex-wrap gap-2 mb-3">
-                                            <Button
-                                                variant="outline-secondary"
-                                                onClick={() => setColorFilter('All')}
-                                                active={colorFilter === 'All'}
-                                            >
-                                                All Colors
-                                            </Button>
-                                            <Button
-                                                variant="outline-secondary"
-                                                onClick={() => setColorFilter('Brown')}
-                                                active={colorFilter === 'Brown'}
-                                            >
-                                                Brown
-                                            </Button>
-                                            <Button
-                                                variant="outline-secondary"
-                                                onClick={() => setColorFilter('Black')}
-                                                active={colorFilter === 'Black'}
-                                            >
-                                                Black
-                                            </Button>
-                                        </div>
-                                    </div>
-
-                                    <Row xs={1} sm={2} lg={3} className="g-4">
-                                        {filteredPets.map((pet) => (
-                                            <Col key={pet.id}>
-                                                <Card className="h-100 shadow-sm">
-                                                    <div style={{ height: '200px', overflow: 'hidden' }}>
-                                                        <Card.Img
-                                                            variant="top"
-                                                            src={pet.img}
-                                                            alt={pet.name}
-                                                            className="h-100 w-100"
-                                                            style={{ objectFit: 'cover' }}
-                                                        />
-                                                    </div>
-                                                    <Card.Body>
-                                                        <Card.Title>{pet.name}</Card.Title>
-                                                        <Card.Text>
-                                                            <strong>Type:</strong> {pet.type}<br />
-                                                            <strong>Breed:</strong> {pet.breed}<br />
-                                                            <strong>Age:</strong> {pet.age}<br />
-                                                            <strong>Color:</strong> {pet.color}
-                                                        </Card.Text>
-                                                    </Card.Body>
-                                                    <Card.Footer className="bg-white border-0">
-                                                        <Button variant="primary" className="w-100">
-                                                            Adopt Me
-                                                        </Button>
-                                                    </Card.Footer>
-                                                </Card>
-                                            </Col>
-                                        ))}
-                                    </Row>
-
-                                    {filteredPets.length === 0 && (
-                                        <div className="text-center py-5">
-                                            <p>No pets match your current filters. Please try different criteria.</p>
-                                        </div>
-                                    )}
-                                </Tab.Pane>
+                                <PetsForAdoption pets={[1, 2]} />
 
                                 {/* For Rescue Tab */}
                                 <Tab.Pane eventKey="ForRescue">
-                                    <h2 className="mb-4 text-primary d-none d-lg-block">Animals Needing Rescue</h2>
-                                    <Card className="bg-light mb-4 border-0 shadow-sm">
+                                    <h2 className="fw-bold mb-4 text-gradient d-none d-lg-block">Animals Needing Rescue</h2>
+                                    {/* <Card className="bg-light mb-4 border-0 shadow-sm">
                                         <Card.Body>
                                             <Card.Title className="text-danger">Urgent Cases</Card.Title>
                                             <Card.Text>
@@ -447,7 +319,7 @@ const LandingPage = () => {
                                                 To become a foster parent, you'll need to meet certain requirements...
                                             </Accordion.Body>
                                         </Accordion.Item>
-                                    </Accordion>
+                                    </Accordion> */}
                                 </Tab.Pane>
 
                                 {/* Rainbow Bridge Tab */}
@@ -460,92 +332,11 @@ const LandingPage = () => {
                                     <Events />
                                 </Tab.Pane>
 
-                                {/* Welfare Law Tab */}
-                                <Tab.Pane eventKey="WelfareLaw">
-                                    <h2 className="mb-4 text-primary d-none d-lg-block">The Animal Welfare Law</h2>
-                                    <Card className="mb-4 shadow-sm">
-                                        <Card.Body>
-                                            <Card.Title>Key Provisions</Card.Title>
-                                            <ListGroup variant="flush">
-                                                <ListGroup.Item>Animals must be provided with adequate food and water</ListGroup.Item>
-                                                <ListGroup.Item>Proper shelter must be available at all times</ListGroup.Item>
-                                                <ListGroup.Item>Veterinary care must be provided when needed</ListGroup.Item>
-                                                <ListGroup.Item>Protection from extreme weather conditions</ListGroup.Item>
-                                                <ListGroup.Item>Freedom from unnecessary pain and suffering</ListGroup.Item>
-                                            </ListGroup>
-                                        </Card.Body>
-                                    </Card>
-                                    <Row xs={1} sm={2} className="g-3">
-                                        <Col sm={12}>
-                                            <Button variant="info" size="lg" className="w-100">
-                                                Read the Full Law Text
-                                            </Button>
-                                        </Col>
-                                        <Col>
-                                            <Button variant="outline-secondary" className="w-100">
-                                                Download PDF Version
-                                            </Button>
-                                        </Col>
-                                        <Col>
-                                            <Button variant="outline-info" className="w-100">
-                                                Report a Violation
-                                            </Button>
-                                        </Col>
-                                    </Row>
-                                </Tab.Pane>
+                                {/* Animal Welfare Law Tab */}
+                                <AnimalWelfareLaw />
 
                                 {/* About Us Tab */}
-                                <Tab.Pane eventKey="AboutUs">
-                                    <h2 className="mb-4 text-primary d-none d-lg-block">About Our Organization</h2>
-                                    <Row className="mb-4 g-4">
-                                        <Col sm={6}>
-                                            <Card className="h-100 border-0 shadow-sm">
-                                                <Card.Body>
-                                                    <Card.Title>Our Mission</Card.Title>
-                                                    <Card.Text>
-                                                        To improve anima lwelfare through awareness campaigns, providing food and shelter, and fostering a compassionate community. We aim to create a safe and supportive environment for all animals, ensuring they receive the care and respect thay deserve.
-                                                    </Card.Text>
-                                                </Card.Body>
-                                            </Card>
-                                        </Col>
-                                        <Col sm={6}>
-                                            <Card className="h-100 border-0 shadow-sm">
-                                                <Card.Body>
-                                                    <Card.Title>Our History</Card.Title>
-                                                    <Card.Text>
-                                                        Founded in 2010, we've helped over 5,000 animals find loving homes
-                                                        and provided medical care to thousands more. Our team of dedicated
-                                                        professionals and volunteers work tirelessly to make a difference.
-                                                    </Card.Text>
-                                                </Card.Body>
-                                            </Card>
-                                        </Col>
-                                    </Row>
-                                    <Card className="border-primary mb-4">
-                                        <Card.Header className="bg-primary text-white">
-                                            Contact Information
-                                        </Card.Header>
-                                        <Card.Body>
-                                            <Row className="g-4">
-                                                <Col sm={6}>
-                                                    <address>
-                                                        <strong>TAARA for the Love of Strays</strong><br />
-                                                        P-3 Burac St., San Lorenzo<br />
-                                                        Tabaco, Philippines<br />
-                                                        <abbr title="Phone">Phone:</abbr> (+63) 905 523 8105
-                                                    </address>
-                                                </Col>
-                                                <Col sm={6}>
-                                                    <p>
-                                                        <strong>Email:</strong> tabacoanimalrescueadoption2022@gmail.com<br />
-                                                        <strong>Hours:</strong> Mon-Fri 9am-5pm
-                                                    </p>
-                                                    
-                                                </Col>
-                                            </Row>
-                                        </Card.Body>
-                                    </Card>
-                                </Tab.Pane>
+                                <AboutUsTab />
                             </Tab.Content>
                         </Col>
                     </Row>

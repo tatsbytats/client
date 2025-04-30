@@ -1,11 +1,9 @@
-// RainbowBridge.jsx
 import React from 'react';
-import { Image, Button, Card, Row, Col } from 'react-bootstrap';
+import { Image, Button, Card, Row, Col, Container } from 'react-bootstrap';
 import '../../assets/styles/custom-text-colors.css';
 import '../../assets/styles/custom-buttons.css';
 
 const RainbowBridge = () => {
-  // Static data for pet memorials
   const petMemorials = [
     {
       id: 1,
@@ -37,30 +35,24 @@ const RainbowBridge = () => {
   ];
 
   return (
-    <div className="text-center py-4">
-      <h2 className="mb-4 text-deep-raspberry d-none d-lg-block">Rainbow Bridge</h2>
-      <div className="mx-auto" style={{ maxWidth: '500px' }}>
-        <Image
-          src="https://source.unsplash.com/random/400x300/?angel"
-          rounded
-          className="mb-3 shadow"
-          fluid
-          style={{ height: '300px', objectFit: 'cover' }}
-        />
-      </div>
-      <p className="lead">
+    <Container className="text-center py-5">
+      <h2 className="mb-3 text-deep-raspberry fw-bold">Rainbow Bridge</h2>
+
+      
+
+      <p className="lead text-muted mb-3">
         In loving memory of the animals we've loved and lost.
       </p>
-      <blockquote className="blockquote">
-        <p className="mb-0">
+
+      <blockquote className="blockquote text-secondary">
+        <p className="mb-0 fst-italic">
           "Until one has loved an animal, a part of one's soul remains unawakened."
         </p>
-        <footer className="blockquote-footer mt-2">Anatole France</footer>
+        <footer className="blockquote-footer mt-2 small">Anatole France</footer>
       </blockquote>
 
-      {/* Pet Memorial Cards Section */}
       <div className="mt-5">
-        <h4 className="mb-4">Our Beloved Companions</h4>
+        <h4 className="mb-4 text-primary">Our Beloved Companions</h4>
         <Row xs={1} md={2} lg={3} className="g-4">
           {petMemorials.map((pet) => (
             <Col key={pet.id}>
@@ -70,52 +62,49 @@ const RainbowBridge = () => {
         </Row>
       </div>
 
-      <Button variant="outline-primary" className="mt-5 btn-sunrise-coral">
+      <Button variant="sunrise-coral" className="mt-5">
         Share Your Memorial
       </Button>
-    </div>
+    </Container>
   );
 };
 
-// PetCard Component with consistent image sizing and candle counter
+// PetCard Component
 const PetCard = ({ pet }) => {
-  // Initialize candle count from localStorage or default to 0
   const [candleCount, setCandleCount] = React.useState(() => {
-    const savedCount = localStorage.getItem(`candleCount_${pet.id}`);
-    return savedCount ? parseInt(savedCount) : 0;
+    const saved = localStorage.getItem(`candleCount_${pet.id}`);
+    return saved ? parseInt(saved) : 0;
   });
 
   const handleLightCandle = () => {
-    const newCount = candleCount + 1;
-    setCandleCount(newCount);
-    localStorage.setItem(`candleCount_${pet.id}`, newCount.toString());
+    const updated = candleCount + 1;
+    setCandleCount(updated);
+    localStorage.setItem(`candleCount_${pet.id}`, updated.toString());
   };
 
   return (
-    <Card className="h-100 shadow-sm">
+    <Card className="h-100 shadow-sm border-0">
       <div style={{ height: '200px', overflow: 'hidden' }}>
-        <Card.Img 
-          variant="top" 
-          src={pet.image} 
-          style={{ 
-            height: '100%', 
-            width: '100%', 
-            objectFit: 'cover' 
-          }} 
+        <Card.Img
+          variant="top"
+          src={pet.image}
+          alt={pet.name}
+          className="w-100 h-100"
+          style={{ objectFit: 'cover' }}
         />
       </div>
       <Card.Body className="d-flex flex-column">
         <Card.Title>{pet.name}</Card.Title>
-        <Card.Subtitle className="mb-2 text-muted">
+        <Card.Subtitle className="mb-1 text-muted small">
           {pet.type} • {pet.breed}
         </Card.Subtitle>
-        <Card.Text className="text-muted">{pet.years}</Card.Text>
-        <Card.Text className="fst-italic mt-auto">"{pet.quote}"</Card.Text>
+        <Card.Text className="text-muted small">{pet.years}</Card.Text>
+        <Card.Text className="mt-auto fst-italic text-secondary small">"{pet.quote}"</Card.Text>
       </Card.Body>
-      <Card.Footer className="bg-white border-0">
-        <Button 
-          variant="outline-secondary" 
-          size="sm" 
+      <Card.Footer className="bg-transparent border-0 pt-0">
+        <Button
+          variant="outline-secondary"
+          size="sm"
           className="w-100"
           onClick={handleLightCandle}
         >

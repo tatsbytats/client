@@ -1,8 +1,7 @@
-// Events.jsx
 import '../../assets/styles/custom-buttons.css';
-import React from 'react';
-import { Card, Button, Row, Col } from 'react-bootstrap';
 
+import React from 'react';
+import { Card, Button, Row, Col, Container } from 'react-bootstrap';
 
 // Static events data
 const eventsData = [
@@ -52,23 +51,25 @@ const eventsData = [
 
 const Events = () => {
   return (
-    <>
-      <h2 className="mb-4 d-none d-lg-block">Upcoming Events</h2>
+    <Container className="py-4">
+      <h2 className="mb-3 text-deep-raspberry fw-bold">Upcoming Events</h2>
+
       <Row xs={1} sm={2} lg={3} className="g-4">
         {eventsData.map((event) => (
           <Col key={event.id}>
-            <Card className="h-100 shadow-sm">
+            <Card className="h-100 shadow-sm border-0">
               <Card.Body>
-                <Card.Title>{event.title}</Card.Title>
-                <Card.Subtitle className="mb-2 text-muted">
-                  {event.date} • {event.time}
-                </Card.Subtitle>
-                <Card.Text>
+                <Card.Title className="mb-2">{event.title}</Card.Title>
+                <Card.Text className="text-muted small mb-2">
+                  <i className="bi bi-calendar-event me-1"></i>
+                  {event.date} &nbsp; • &nbsp; {event.time}
+                </Card.Text>
+                <Card.Text className="mb-0">
                   <strong>Location:</strong> {event.location}
                 </Card.Text>
               </Card.Body>
-              <Card.Footer className="bg-white border-0">
-                <Button className="btn-crimson-plum" variant="crimson-plum" > 
+              <Card.Footer className="bg-transparent border-0 pt-0">
+                <Button className="w-100 btn-crimson-plum" variant="crimson-plum">
                   RSVP
                 </Button>
               </Card.Footer>
@@ -76,7 +77,7 @@ const Events = () => {
           </Col>
         ))}
       </Row>
-    </>
+    </Container>
   );
 };
 
