@@ -21,7 +21,6 @@ function App() {
           <Route path="/signup" element={<SignUpForm />} />     
           <Route path="/dashboard" element={<AdminDashboard />} /> 
           <Route path="/admin/login" element={<AdminLoginForm />} />
-          
         </Routes>
       </Router>
     </div>

@@ -7,18 +7,33 @@ const Footer = () => (
     <Container>
       <Row className="g-4">
         <Col lg={4}>
-          <h5>Paws & Hearts</h5>
-          <p className="text-muted">
-            Dedicated to animal welfare since 2010. A 501(c)(3) non-profit organization.
+          <h5>Taara</h5>
+          <p className="">
+          SEC registered, volunteer based,LGU accredited animal welfare group aimed at promoting a society where all animals are protected and treated with love,compassion and respect.
           </p>
           <div className="social-icons">
-            <Button variant="outline-light" size="sm" className="me-2">
+            <Button
+              variant="outline-light"
+              size="sm"
+              className="me-2"
+              onClick={() => window.open("https://www.facebook.com/TAARAfortheLoveofStrays2022", "_blank")}
+            >
               <Facebook />
             </Button>
-            <Button variant="outline-light" size="sm" className="me-2">
+            <Button
+              variant="outline-light"
+              size="sm"
+              className="me-2"
+              onClick={() => window.open("https://instagram.com/yourpage", "_blank")}
+            >
               <Instagram />
             </Button>
-            <Button variant="outline-light" size="sm" className="me-2">
+            <Button
+              variant="outline-light"
+              size="sm"
+              className="me-2"
+              onClick={() => window.open("https://twitter.com/yourpage", "_blank")}
+            >
               <Twitter />
             </Button>
           </div>
